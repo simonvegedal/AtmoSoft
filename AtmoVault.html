@@ -1,0 +1,2054 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>AtmoVault</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<style>
+    :root {
+  --bg: #f5f7fa;
+  --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --text: #333;
+  --primary: #1e90ff;
+  --secondary: #3498db;
+  --accent: #4facfe;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --muted: #7f8c8d;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --dark-card: rgba(40, 40, 50, 0.9);
+  --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  --border-radius: 15px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header and Navigation Styles */
+header {
+  background-color: var(--card-bg);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(10px);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.logo i {
+  margin-right: 10px;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: white;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Authentication container */
+#auth-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+#auth-container h1 {
+  color: var(--primary);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#auth-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--transition);
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+  width: 100%;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(30, 144, 255, 0.4);
+}
+
+#auth-container p {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+#auth-container a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* Hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Dashboard styles */
+#dashboard {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 2rem auto;
+}
+
+.dashboard-header {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#logout-btn {
+  width: auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+#logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Add Password Section */
+.add-password-container {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.add-password-container h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.password-input-group {
+  position: relative;
+}
+
+.icon-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  box-shadow: none;
+  width: auto;
+  padding: 5px;
+  color: var(--muted);
+}
+
+.icon-btn:hover {
+  transform: translateY(-50%);
+  box-shadow: none;
+  color: var(--primary);
+}
+
+#generate-password-btn {
+  background: rgba(30, 144, 255, 0.1);
+  color: var(--primary);
+  box-shadow: none;
+  margin-bottom: 1rem;
+}
+
+#generate-password-btn:hover {
+  background: rgba(30, 144, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Password List Section */
+.passwords-container {
+  padding: 1.5rem;
+}
+
+.passwords-container h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.search-container {
+  margin-bottom: 1.5rem;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #eee;
+  border-radius: 50px;
+  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237f8c8d' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+}
+
+#passwords-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.password-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.password-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.site-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.site-details h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.site-details p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+.close-modal,
+.close-edit-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  width: auto;
+  box-shadow: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.close-modal:hover,
+.close-edit-modal:hover {
+  color: var(--danger);
+  transform: none;
+  box-shadow: none;
+}
+
+.modal-content h2 {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--primary);
+}
+
+#password-details {
+  padding: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.detail-row strong {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.9rem;
+  width: 120px;
+}
+
+.detail-row p {
+  font-family: monospace;
+  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  flex-grow: 1;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  color: var(--primary);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.copy-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.modal-actions {
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-actions button {
+  width: auto;
+}
+
+#edit-password-btn {
+  background: rgba(30, 144, 255, 0.1);
+  color: var(--primary);
+  box-shadow: none;
+}
+
+#edit-password-btn:hover {
+  background: rgba(30, 144, 255, 0.2);
+}
+
+#delete-password-btn {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  box-shadow: none;
+}
+
+#delete-password-btn:hover {
+  background: rgba(231, 76, 60, 0.2);
+}
+
+/* Password strength indicator */
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.strength-meter {
+  height: 5px;
+  background: #eee;
+  border-radius: 2.5px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.strength-meter.weak::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 33%;
+  background: var(--danger);
+}
+
+.strength-meter.medium::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 66%;
+  background: var(--warning);
+}
+
+.strength-meter.strong::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--success);
+}
+
+.strength-text {
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.match-indicator {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* No passwords message */
+.text-center {
+  text-align: center;
+  padding: 2rem;
+  color: var(--muted);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+    --text: #f9f9f9;
+    --card-bg: rgba(30, 30, 40, 0.9);
+    --muted: #9ca3af;
+  }
+  
+  input[type="email"],
+  input[type="password"],
+  input[type="text"] {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+  }
+  
+  .password-item,
+  .modal-content {
+    background: var(--dark-card);
+  }
+  
+  .detail-row p {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+  }
+  
+  .copy-btn {
+    background: var(--dark-card);
+  }
+  
+  .search-container input {
+    background-color: rgba(255, 255, 255, 0.05);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+  }
+  
+  .strength-meter {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .modal-content h2,
+  .modal-actions,
+  .dashboard-header,
+  .add-password-container {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #passwords-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .detail-row strong {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  
+  .detail-row p {
+    width: 100%;
+  }
+  
+  .copy-btn {
+    position: static;
+    transform: none;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+  
+  .copy-btn:hover {
+    transform: none;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+}
+
+/* Add these styles to the existing <style> section */
+
+/* Password Generator Modal Styles */
+/* Add these styles to the existing <style> section */
+
+/* Password Generator Modal Styles */
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 10px;
+}
+
+#length-value {
+    min-width: 30px;
+    font-weight: bold;
+    color: var(--primary);
+    padding-left: 10px;
+}
+
+.password-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin: 1rem 0;
+    padding-left: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    
+}
+
+.generated-password-container {
+    margin: 1.5rem auto;
+    width: 90%;
+}
+
+
+#generated-password {
+    font-family: monospace;
+    letter-spacing: 0.05em;
+}
+
+#regenerate-password-btn {
+    background: rgba(30, 144, 255, 0.1);
+    color: var(--primary);
+    box-shadow: none;
+}
+
+#regenerate-password-btn:hover {
+    background: rgba(30, 144, 255, 0.2);
+}
+
+#use-password-btn {
+    background: linear-gradient(to right, var(--success), var(--accent));
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-actions button {
+        width: 90%;
+    }
+}
+
+.length-value {
+    padding-left: 20px;
+}
+
+.exit-modal-btn {
+    position: absolute;
+    top: 10px;     /* Distance from top */
+    right: 10px;   /* Distance from right */
+    width: auto;
+    margin: 0;
+    display: block;
+    padding: 8px;  /* Adjust as needed */
+}
+
+.password-length-bar {
+    padding-left: 20px;
+}
+
+.setting {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.aligned-label {
+  margin-left: 24px;
+  width: 200px; /* You can adjust this value if needed */
+  display: inline-block;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-row strong {
+  min-width: 120px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.value-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0; /* Important for text overflow handling */
+}
+
+.value-container p {
+  margin: 0;
+  word-break: break-word; /* Changed from break-all for better readability */
+  padding-right: 10px;
+  overflow-wrap: break-word;
+  max-width: calc(100% - 36px); /* Leave space for the button */
+}
+
+/* Special styling for password field */
+.password-row .value-container {
+  flex-wrap: wrap; /* Allow wrapping if needed */
+}
+
+.password-text {
+  font-family: monospace; /* Better for passwords */
+  overflow-wrap: break-word;
+  white-space: pre-wrap; /* Preserve spaces but wrap text */
+}
+
+.copy-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.copy-btn.copied {
+  opacity: 1;
+  background-color: #f0fff0;
+}
+</style>
+
+<body>
+  <!-- Header added from index.html -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="index.html" class="logo"><i class="fas fa-cloud-sun"></i> AtmoSoft</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="AtmoVault.html" class="active">AtmoVault</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="container">
+      <div id="auth-container">
+          <h1>Password Manager</h1>
+          
+          <!-- Login Form -->
+          <div id="login-form">
+              <h2>Login</h2>
+              <div class="form-group">
+                  <label for="login-email">Email</label>
+                  <input type="email" id="login-email" placeholder="Enter your email">
+              </div>
+              <div class="form-group">
+                  <label for="login-password">Master Password</label>
+                  <input type="password" id="login-password" placeholder="Enter your master password">
+              </div>
+              <button id="login-btn">Login</button>
+              <p>Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+          </div>
+          
+          <!-- Signup Form -->
+          <div id="signup-form" class="hidden">
+              <h2>Create Account</h2>
+              <div class="form-group">
+                  <label for="signup-email">Email</label>
+                  <input type="email" id="signup-email" placeholder="Enter your email">
+              </div>
+              <div class="form-group">
+                  <label for="signup-password">Master Password</label>
+                  <input type="password" id="signup-password" placeholder="Create a strong master password">
+              </div>
+              <div class="form-group">
+                  <label for="confirm-password">Confirm Password</label>
+                  <input type="password" id="confirm-password" placeholder="Confirm your password">
+              </div>
+              <button id="signup-btn">Sign Up</button>
+              <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+          </div>
+      </div>
+      
+      <!-- Password Manager Dashboard -->
+      <div id="dashboard" class="hidden">
+          <div class="dashboard-header">
+              <h1>Password Manager Dashboard</h1>
+              <button id="logout-btn">Logout</button>
+          </div>
+          
+          <!-- Add New Password -->
+          <div class="add-password-container">
+              <h2>Add New Password</h2>
+              <div class="form-group">
+                  <label for="site-name">Site Name</label>
+                  <input type="text" id="site-name" placeholder="e.g., Google, Facebook">
+              </div>
+              <div class="form-group">
+                  <label for="site-url">URL</label>
+                  <input type="text" id="site-url" placeholder="e.g., https://www.google.com">
+              </div>
+              <div class="form-group">
+                  <label for="username">Username/Email</label>
+                  <input type="text" id="username" placeholder="Your login username or email">
+              </div>
+              <div class="form-group password-input-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" placeholder="Your password">
+                  <button id="show-password-btn" class="icon-btn">👁️</button>
+              </div>
+              <div class="form-group">
+                  <button id="generate-password-btn">Generate Strong Password</button>
+              </div>
+              <button id="save-password-btn">Save Password</button>
+          </div>
+          
+          <!-- Password List -->
+          <div class="passwords-container">
+              <h2>Your Saved Passwords</h2>
+              <div class="search-container">
+                  <input type="text" id="search-passwords" placeholder="Search passwords...">
+              </div>
+              <div id="passwords-list">
+                  <!-- Password entries will be added here dynamically -->
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Password Details Modal -->
+  <div id="password-modal" class="modal hidden">
+      <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>Password Details</h2>
+          <div id="password-details">
+              <!-- Password details will be shown here -->
+          </div>
+          <div class="modal-actions">
+              <button id="edit-password-btn">Edit</button>
+              <button id="delete-password-btn">Delete</button>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Edit Password Modal -->
+  <div id="edit-modal" class="modal hidden">
+      <div class="modal-content">
+          <span class="close-edit-modal">&times;</span>
+          <h2>Edit Password</h2>
+          <div class="form-group">
+              <label for="edit-site-name">Site Name</label>
+              <input type="text" id="edit-site-name">
+          </div>
+          <div class="form-group">
+              <label for="edit-site-url">URL</label>
+              <input type="text" id="edit-site-url">
+          </div>
+          <div class="form-group">
+              <label for="edit-username">Username/Email</label>
+              <input type="text" id="edit-username">
+          </div>
+          <div class="form-group password-input-group">
+              <label for="edit-password">Password</label>
+              <input type="password" id="edit-password">
+              <button id="show-edit-password-btn" class="icon-btn">👁️</button>
+          </div>
+          <button id="update-password-btn">Update Password</button>
+      </div>
+  </div>
+  
+
+<!-- Add this modal HTML after the Edit Password Modal -->
+<div id="generator-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Password Generator</h2>
+      <button class="exit-modal-btn" id="exit-generator-modal">Exit</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group checkbox-group">
+        <label for="password-length" class="aligned-label">Password Length</label>
+        <div class="range-container">
+          <input class="password-length-bar" type="range" id="password-length" min="8" max="64" value="16">
+          <span id="length-value">16</span>
+        </div>
+      </div>
+
+      <div class="password-options">
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-lowercase" checked>
+          <label for="include-lowercase">Include Lowercase (a-z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-uppercase" checked>
+          <label for="include-uppercase">Include Uppercase (A-Z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-numbers" checked>
+          <label for="include-numbers">Include Numbers (0-9)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-symbols" checked>
+          <label for="include-symbols">Include Symbols (!@#$%^&*)</label>
+        </div>
+      </div>
+
+      <div class="generated-password-container">
+        <label for="generated-password">Generated Password</label>
+        <div class="password-input-group">
+          <input type="text" id="generated-password" readonly>
+          <button id="copy-generated-password" class="icon-btn">📋</button>
+        </div>
+        <div class="password-strength">
+          <div class="strength-meter"></div>
+          <div class="strength-text"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button id="regenerate-password-btn">Regenerate</button>
+      <button id="use-password-btn">Use This Password</button>
+    </div>
+  </div>
+</div>
+
+    
+</body>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script>
+    // Firebase Configuration
+const firebaseConfig = {
+    // Replace with your Firebase project configuration
+    apiKey: "AIzaSyAzRhzeGeIR8VUZ5nJ7qT6TLllZWFM9_wM",
+  authDomain: "atmovault-3a734.firebaseapp.com",
+  projectId: "atmovault-3a734",
+  storageBucket: "atmovault-3a734.firebasestorage.app",
+  messagingSenderId: "772873696815",
+  appId: "1:772873696815:web:64b244bdc6f810642738da",
+  measurementId: "G-7C8RY5SNZD"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  // Initialize Firebase services
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  
+  // Enable offline persistence if needed
+  db.enablePersistence()
+    .catch((err) => {
+      if (err.code === 'failed-precondition') {
+        console.log('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+      } else if (err.code === 'unimplemented') {
+        console.log('The current browser does not support all of the features required to enable persistence.');
+      }
+    });
+  
+  // Export for use in other files
+  window.auth = auth;
+  window.db = db;
+   
+// DOM Elements - Authentication
+const authContainer = document.getElementById('auth-container');
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+const showSignupBtn = document.getElementById('show-signup');
+const showLoginBtn = document.getElementById('show-login');
+const loginEmailInput = document.getElementById('login-email');
+const loginPasswordInput = document.getElementById('login-password');
+const loginBtn = document.getElementById('login-btn');
+const signupEmailInput = document.getElementById('signup-email');
+const signupPasswordInput = document.getElementById('signup-password');
+const confirmPasswordInput = document.getElementById('confirm-password');
+const signupBtn = document.getElementById('signup-btn');
+
+// DOM Elements - Dashboard
+const dashboard = document.getElementById('dashboard');
+const logoutBtn = document.getElementById('logout-btn');
+const siteNameInput = document.getElementById('site-name');
+const siteUrlInput = document.getElementById('site-url');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const showPasswordBtn = document.getElementById('show-password-btn');
+const generatePasswordBtn = document.getElementById('generate-password-btn');
+const savePasswordBtn = document.getElementById('save-password-btn');
+const searchPasswordsInput = document.getElementById('search-passwords');
+const passwordsList = document.getElementById('passwords-list');
+
+// DOM Elements - Modals
+const passwordModal = document.getElementById('password-modal');
+const passwordDetails = document.getElementById('password-details');
+const closeModalBtn = document.querySelector('.close-modal');
+const editPasswordBtn = document.getElementById('edit-password-btn');
+const deletePasswordBtn = document.getElementById('delete-password-btn');
+const editModal = document.getElementById('edit-modal');
+const closeEditModalBtn = document.querySelector('.close-edit-modal');
+const editSiteNameInput = document.getElementById('edit-site-name');
+const editSiteUrlInput = document.getElementById('edit-site-url');
+const editUsernameInput = document.getElementById('edit-username');
+const editPasswordInput = document.getElementById('edit-password');
+const showEditPasswordBtn = document.getElementById('show-edit-password-btn');
+const updatePasswordBtn = document.getElementById('update-password-btn');
+
+// Global variables
+let currentUser = null;
+let currentPasswordId = null;
+let passwords = [];
+let encryptionKey = null;
+
+// Event Listeners - Authentication
+showSignupBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginForm.classList.add('hidden');
+  signupForm.classList.remove('hidden');
+});
+
+showLoginBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  signupForm.classList.add('hidden');
+  loginForm.classList.remove('hidden');
+});
+
+loginBtn.addEventListener('click', handleLogin);
+signupBtn.addEventListener('click', handleSignup);
+logoutBtn.addEventListener('click', handleLogout);
+
+// Event Listeners - Password Management
+showPasswordBtn.addEventListener('click', togglePasswordVisibility);
+showEditPasswordBtn.addEventListener('click', toggleEditPasswordVisibility);
+generatePasswordBtn.addEventListener('click', generatePassword);
+savePasswordBtn.addEventListener('click', savePassword);
+searchPasswordsInput.addEventListener('input', filterPasswords);
+
+// Event Listeners - Modals
+closeModalBtn.addEventListener('click', () => passwordModal.classList.add('hidden'));
+closeEditModalBtn.addEventListener('click', () => editModal.classList.add('hidden'));
+editPasswordBtn.addEventListener('click', openEditModal);
+deletePasswordBtn.addEventListener('click', deletePassword);
+updatePasswordBtn.addEventListener('click', updatePassword);
+
+// Check auth state
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    currentUser = user;
+    showDashboard();
+    loadPasswords();
+  } else {
+    showAuthForms();
+  }
+});
+
+// Authentication Functions
+async function handleLogin() {
+  const email = loginEmailInput.value.trim();
+  const password = loginPasswordInput.value;
+  
+  if (!email || !password) {
+    alert('Please enter both email and password');
+    return;
+  }
+  
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    // Login successful, onAuthStateChanged will handle the rest
+    // Generate encryption key from master password
+    encryptionKey = await deriveKeyFromPassword(password);
+    loginPasswordInput.value = '';
+  } catch (error) {
+    alert(`Login failed: ${error.message}`);
+  }
+}
+
+async function handleSignup() {
+  const email = signupEmailInput.value.trim();
+  const password = signupPasswordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+  
+  if (!email || !password || !confirmPassword) {
+    alert('Please fill in all fields');
+    return;
+  }
+  
+  if (password !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+  
+  if (password.length < 8) {
+    alert('Password should be at least 8 characters long');
+    return;
+  }
+  
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    // Generate encryption key from master password
+    encryptionKey = await deriveKeyFromPassword(password);
+    signupPasswordInput.value = '';
+    confirmPasswordInput.value = '';
+    // Initialize user document in Firestore
+    await db.collection('users').doc(userCredential.user.uid).set({
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (error) {
+    alert(`Signup failed: ${error.message}`);
+  }
+}
+
+function handleLogout() {
+  auth.signOut().then(() => {
+    currentUser = null;
+    encryptionKey = null;
+    passwords = [];
+    resetForms();
+  }).catch((error) => {
+    console.error("Logout error:", error);
+  });
+}
+
+// UI Helper Functions
+function showDashboard() {
+  authContainer.classList.add('hidden');
+  dashboard.classList.remove('hidden');
+}
+
+function showAuthForms() {
+  dashboard.classList.add('hidden');
+  authContainer.classList.remove('hidden');
+  loginForm.classList.remove('hidden');
+  signupForm.classList.add('hidden');
+}
+
+function resetForms() {
+  // Clear auth forms
+  loginEmailInput.value = '';
+  loginPasswordInput.value = '';
+  signupEmailInput.value = '';
+  signupPasswordInput.value = '';
+  confirmPasswordInput.value = '';
+  
+  // Clear password form
+  siteNameInput.value = '';
+  siteUrlInput.value = '';
+  usernameInput.value = '';
+  passwordInput.value = '';
+  
+  // Clear search
+  searchPasswordsInput.value = '';
+}
+
+function togglePasswordVisibility() {
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    showPasswordBtn.textContent = '🔒';
+  } else {
+    passwordInput.type = 'password';
+    showPasswordBtn.textContent = '👁️';
+  }
+}
+
+function toggleEditPasswordVisibility() {
+  if (editPasswordInput.type === 'password') {
+    editPasswordInput.type = 'text';
+    showEditPasswordBtn.textContent = '🔒';
+  } else {
+    editPasswordInput.type = 'password';
+    showEditPasswordBtn.textContent = '👁️';
+  }
+}
+
+// Password Management Functions
+async function savePassword() {
+  const siteName = siteNameInput.value.trim();
+  const siteUrl = siteUrlInput.value.trim();
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
+  
+  if (!siteName || !username || !password) {
+    alert('Please fill in site name, username, and password');
+    return;
+  }
+  
+  try {
+    // Encrypt sensitive data
+    const encryptedUsername = await encryptData(username);
+    const encryptedPassword = await encryptData(password);
+    
+    // Save to Firestore
+    await db.collection('users').doc(currentUser.uid).collection('passwords').add({
+      siteName,
+      siteUrl,
+      username: encryptedUsername,
+      password: encryptedPassword,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    // Clear form
+    siteNameInput.value = '';
+    siteUrlInput.value = '';
+    usernameInput.value = '';
+    passwordInput.value = '';
+    
+    // Reload passwords
+    loadPasswords();
+    
+    alert('Password saved successfully');
+  } catch (error) {
+    console.error("Error saving password:", error);
+    alert('Failed to save password');
+  }
+}
+
+async function loadPasswords() {
+  if (!currentUser) return;
+  
+  try {
+    const snapshot = await db.collection('users').doc(currentUser.uid).collection('passwords')
+      .orderBy('updatedAt', 'desc')
+      .get();
+    
+    passwords = await Promise.all(snapshot.docs.map(async (doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        siteName: data.siteName,
+        siteUrl: data.siteUrl,
+        username: await decryptData(data.username),
+        password: await decryptData(data.password),
+        createdAt: data.createdAt?.toDate(),
+        updatedAt: data.updatedAt?.toDate()
+      };
+    }));
+    
+    renderPasswords(passwords);
+  } catch (error) {
+    console.error("Error loading passwords:", error);
+    alert('Failed to load passwords');
+  }
+}
+
+function renderPasswords(passwordsToRender) {
+  passwordsList.innerHTML = '';
+  
+  if (passwordsToRender.length === 0) {
+    passwordsList.innerHTML = '<p class="text-center">No passwords saved yet.</p>';
+    return;
+  }
+  
+  passwordsToRender.forEach((item) => {
+    const passwordElement = document.createElement('div');
+    passwordElement.className = 'password-item';
+    passwordElement.dataset.id = item.id;
+    
+    const firstLetter = item.siteName.charAt(0).toUpperCase();
+    
+    passwordElement.innerHTML = `
+      <div class="site-info">
+        <div class="site-icon">${firstLetter}</div>
+        <div class="site-details">
+          <h3>${item.siteName}</h3>
+          <p>${item.username}</p>
+        </div>
+      </div>
+    `;
+    
+    passwordElement.addEventListener('click', () => showPasswordDetails(item));
+    passwordsList.appendChild(passwordElement);
+  });
+}
+
+function showPasswordDetails(password) {
+  currentPasswordId = password.id;
+  passwordDetails.innerHTML = `
+    <div class="detail-row">
+      <strong>Site Name:</strong>
+      <div class="value-container">
+        <p>${password.siteName}</p>
+        <button class="copy-btn" data-value="${password.siteName}" title="Copy site name">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    ${password.siteUrl ? `
+    <div class="detail-row">
+      <strong>URL:</strong>
+      <div class="value-container">
+        <p>${password.siteUrl}</p>
+        <button class="copy-btn" data-value="${password.siteUrl}" title="Copy URL">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    ` : ''}
+    <div class="detail-row">
+      <strong>Username/Email:</strong>
+      <div class="value-container">
+        <p>${password.username}</p>
+        <button class="copy-btn" data-value="${password.username}" title="Copy username">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="detail-row password-row">
+      <strong>Password:</strong>
+      <div class="value-container">
+        <p class="password-text">${password.password}</p>
+        <button class="copy-btn" data-value="${password.password}" title="Copy password">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    ${password.updatedAt ? `
+    <div class="detail-row">
+      <strong>Last Updated:</strong>
+      <p>${password.updatedAt.toLocaleDateString()}</p>
+    </div>
+    ` : ''}
+  `;
+  
+  // Add event listeners to copy buttons
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const textToCopy = this.getAttribute('data-value');
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Show temporary success indication
+        const originalHTML = this.innerHTML;
+        this.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        `;
+        this.classList.add('copied');
+        
+        // Reset after animation
+        setTimeout(() => {
+          this.innerHTML = originalHTML;
+          this.classList.remove('copied');
+        }, 1500);
+      });
+    });
+  });
+  
+  passwordModal.classList.remove('hidden');
+}
+
+
+function openEditModal() {
+  const password = passwords.find(p => p.id === currentPasswordId);
+  if (!password) return;
+  
+  editSiteNameInput.value = password.siteName;
+  editSiteUrlInput.value = password.siteUrl || '';
+  editUsernameInput.value = password.username;
+  editPasswordInput.value = password.password;
+  
+  passwordModal.classList.add('hidden');
+  editModal.classList.remove('hidden');
+}
+
+async function updatePassword() {
+  const siteName = editSiteNameInput.value.trim();
+  const siteUrl = editSiteUrlInput.value.trim();
+  const username = editUsernameInput.value.trim();
+  const password = editPasswordInput.value;
+  
+  if (!siteName || !username || !password) {
+    alert('Please fill in site name, username, and password');
+    return;
+  }
+  
+  try {
+    // Encrypt sensitive data
+    const encryptedUsername = await encryptData(username);
+    const encryptedPassword = await encryptData(password);
+    
+    // Update in Firestore
+    await db.collection('users').doc(currentUser.uid).collection('passwords').doc(currentPasswordId).update({
+      siteName,
+      siteUrl,
+      username: encryptedUsername,
+      password: encryptedPassword,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    editModal.classList.add('hidden');
+    loadPasswords();
+    
+    alert('Password updated successfully');
+  } catch (error) {
+    console.error("Error updating password:", error);
+    alert('Failed to update password');
+  }
+}
+
+async function deletePassword() {
+  if (!confirm('Are you sure you want to delete this password?')) return;
+  
+  try {
+    await db.collection('users').doc(currentUser.uid).collection('passwords').doc(currentPasswordId).delete();
+    passwordModal.classList.add('hidden');
+    loadPasswords();
+    alert('Password deleted successfully');
+  } catch (error) {
+    console.error("Error deleting password:", error);
+    alert('Failed to delete password');
+  }
+}
+
+function filterPasswords() {
+  const searchTerm = searchPasswordsInput.value.toLowerCase();
+  
+  if (!searchTerm) {
+    renderPasswords(passwords);
+    return;
+  }
+  
+  const filteredPasswords = passwords.filter(password => 
+    password.siteName.toLowerCase().includes(searchTerm) || 
+    password.username.toLowerCase().includes(searchTerm) ||
+    (password.siteUrl && password.siteUrl.toLowerCase().includes(searchTerm))
+  );
+  
+  renderPasswords(filteredPasswords);
+}
+
+// Password Generator
+function generatePassword() {
+  const length = 16;
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}|:<>?-=[];,./";
+  let password = "";
+  
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset[randomIndex];
+  }
+  
+  passwordInput.value = password;
+}
+
+// Encryption/Decryption Functions
+async function deriveKeyFromPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  
+  // Generate a key using PBKDF2
+  const salt = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+  const importedKey = await window.crypto.subtle.importKey(
+    'raw',
+    data,
+    { name: 'PBKDF2' },
+    false,
+    ['deriveKey']
+  );
+  
+  return window.crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt: salt,
+      iterations: 100000,
+      hash: 'SHA-256'
+    },
+    importedKey,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt', 'decrypt']
+  );
+}
+
+async function encryptData(data) {
+  if (!encryptionKey) {
+    throw new Error('Encryption key not available');
+  }
+  
+  const encoder = new TextEncoder();
+  const encodedData = encoder.encode(data);
+  
+  // Generate random IV (Initialization Vector)
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  
+  // Encrypt the data
+  const encryptedData = await window.crypto.subtle.encrypt(
+    {
+      name: 'AES-GCM',
+      iv: iv
+    },
+    encryptionKey,
+    encodedData
+  );
+  
+  // Combine IV and encrypted data
+  const result = new Uint8Array(iv.length + encryptedData.byteLength);
+  result.set(iv);
+  result.set(new Uint8Array(encryptedData), iv.length);
+  
+  // Convert to base64 for storage
+  return bufferToBase64(result);
+}
+
+async function decryptData(encryptedDataBase64) {
+  if (!encryptionKey) {
+    throw new Error('Encryption key not available');
+  }
+  
+  // Convert from base64
+  const encryptedDataBuffer = base64ToBuffer(encryptedDataBase64);
+  
+  // Extract IV and encrypted data
+  const iv = encryptedDataBuffer.slice(0, 12);
+  const encryptedData = encryptedDataBuffer.slice(12);
+  
+  // Decrypt the data
+  const decryptedData = await window.crypto.subtle.decrypt(
+    {
+      name: 'AES-GCM',
+      iv: iv
+    },
+    encryptionKey,
+    encryptedData
+  );
+  
+  // Convert decrypted data to string
+  const decoder = new TextDecoder();
+  return decoder.decode(decryptedData);
+}
+
+// Helper functions for base64 conversion
+function bufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
+function base64ToBuffer(base64) {
+  const binaryString = window.atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', () => {
+  // Add copy to clipboard functionality
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('copy-btn')) {
+      const textToCopy = e.target.dataset.copy;
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          const originalText = e.target.textContent;
+          e.target.textContent = 'Copied!';
+          setTimeout(() => {
+            e.target.textContent = originalText;
+          }, 1500);
+        })
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+        });
+    }
+  });
+  
+  // Add password strength indicator
+  passwordInput.addEventListener('input', checkPasswordStrength);
+  signupPasswordInput.addEventListener('input', checkSignupPasswordStrength);
+});
+
+function checkPasswordStrength(e) {
+  const password = e.target.value;
+  if (!password) return;
+  
+  const strength = getPasswordStrength(password);
+  let strengthClass = '';
+  let strengthText = '';
+  
+  if (strength < 40) {
+    strengthClass = 'weak';
+    strengthText = 'Weak';
+  } else if (strength < 80) {
+    strengthClass = 'medium';
+    strengthText = 'Medium';
+  } else {
+    strengthClass = 'strong';
+    strengthText = 'Strong';
+  }
+  
+  // Create or update strength indicator
+  let strengthIndicator = e.target.parentNode.querySelector('.password-strength');
+  if (!strengthIndicator) {
+    strengthIndicator = document.createElement('div');
+    strengthIndicator.className = 'password-strength';
+    strengthIndicator.innerHTML = `<div class="strength-meter"></div><div class="strength-text"></div>`;
+    e.target.parentNode.appendChild(strengthIndicator);
+  }
+  
+  const strengthMeter = strengthIndicator.querySelector('.strength-meter');
+  const strengthTextEl = strengthIndicator.querySelector('.strength-text');
+  
+  // Remove all classes
+  strengthMeter.classList.remove('weak', 'medium', 'strong');
+  // Add appropriate class
+  strengthMeter.classList.add(strengthClass);
+  strengthTextEl.textContent = strengthText;
+}
+
+function checkSignupPasswordStrength(e) {
+  checkPasswordStrength(e);
+  
+  // Also check if passwords match
+  const password = signupPasswordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+  
+  if (confirmPassword && password !== confirmPassword) {
+    let matchIndicator = confirmPasswordInput.parentNode.querySelector('.match-indicator');
+    if (!matchIndicator) {
+      matchIndicator = document.createElement('div');
+      matchIndicator.className = 'match-indicator';
+      confirmPasswordInput.parentNode.appendChild(matchIndicator);
+    }
+    matchIndicator.textContent = 'Passwords do not match';
+    matchIndicator.style.color = '#e74c3c';
+  } else if (confirmPassword) {
+    let matchIndicator = confirmPasswordInput.parentNode.querySelector('.match-indicator');
+    if (matchIndicator) {
+      matchIndicator.textContent = 'Passwords match';
+      matchIndicator.style.color = '#2ecc71';
+    }
+  }
+}
+
+// Update the DOM elements section to reference the new exit button instead of close button
+const generatorModal = document.getElementById('generator-modal');
+const exitGeneratorModalBtn = document.getElementById('exit-generator-modal');
+const passwordLengthInput = document.getElementById('password-length');
+const lengthValueSpan = document.getElementById('length-value');
+const includeLowercase = document.getElementById('include-lowercase');
+const includeUppercase = document.getElementById('include-uppercase');
+const includeNumbers = document.getElementById('include-numbers');
+const includeSymbols = document.getElementById('include-symbols');
+const generatedPasswordInput = document.getElementById('generated-password');
+const copyGeneratedPasswordBtn = document.getElementById('copy-generated-password');
+const regeneratePasswordBtn = document.getElementById('regenerate-password-btn');
+const usePasswordBtn = document.getElementById('use-password-btn');
+
+// Update the event listeners section to use the new exit button
+generatePasswordBtn.addEventListener('click', openGeneratorModal);
+exitGeneratorModalBtn.addEventListener('click', () => generatorModal.classList.add('hidden'));
+passwordLengthInput.addEventListener('input', updateLengthValue);
+regeneratePasswordBtn.addEventListener('click', regeneratePassword);
+usePasswordBtn.addEventListener('click', useGeneratedPassword);
+copyGeneratedPasswordBtn.addEventListener('click', copyGeneratedPassword);
+
+// For consistency, you might want to also update the other modals to use the same style
+// You could add these functions to be called when DOM is loaded
+
+function updateModalStyles() {
+    // Update the password details modal
+    const passwordModal = document.getElementById('password-modal');
+    const oldCloseBtn = passwordModal.querySelector('.close-modal');
+    
+    if (passwordModal && oldCloseBtn) {
+        // Create new header
+        const modalHeader = document.createElement('div');
+        modalHeader.className = 'modal-header';
+        modalHeader.innerHTML = `
+            <h2>Password Details</h2>
+            <button class="exit-modal-btn" id="exit-password-modal">Exit</button>
+        `;
+        
+        // Get the modal content
+        const modalContent = passwordModal.querySelector('.modal-content');
+        
+        // Insert header at the beginning of modal content
+        modalContent.insertBefore(modalHeader, modalContent.firstChild);
+        
+        // Remove old close button and h2
+        oldCloseBtn.remove();
+        const oldH2 = modalContent.querySelector('h2:not(.modal-header h2)');
+        if (oldH2) oldH2.remove();
+        
+        // Add event listener to new exit button
+        document.getElementById('exit-password-modal').addEventListener('click', () => {
+            passwordModal.classList.add('hidden');
+        });
+        
+        // Wrap the password details in a modal-body div
+        const passwordDetails = document.getElementById('password-details');
+        const modalBody = document.createElement('div');
+        modalBody.className = 'modal-body';
+        
+        // Move password details into modal body
+        modalContent.insertBefore(modalBody, passwordDetails);
+        modalBody.appendChild(passwordDetails);
+    }
+    
+    // Update the edit password modal with similar changes
+    const editModal = document.getElementById('edit-modal');
+    const oldEditCloseBtn = editModal.querySelector('.close-edit-modal');
+    
+    if (editModal && oldEditCloseBtn) {
+        // Create new header
+        const editModalHeader = document.createElement('div');
+        editModalHeader.className = 'modal-header';
+        editModalHeader.innerHTML = `
+            <h2>Edit Password</h2>
+            <button class="exit-modal-btn" id="exit-edit-modal">Exit</button>
+        `;
+        
+        // Get the modal content
+        const editModalContent = editModal.querySelector('.modal-content');
+        
+        // Insert header at the beginning of modal content
+        editModalContent.insertBefore(editModalHeader, editModalContent.firstChild);
+        
+        // Remove old close button and h2
+        oldEditCloseBtn.remove();
+        const oldEditH2 = editModalContent.querySelector('h2:not(.modal-header h2)');
+        if (oldEditH2) oldEditH2.remove();
+        
+        // Add event listener to new exit button
+        document.getElementById('exit-edit-modal').addEventListener('click', () => {
+            editModal.classList.add('hidden');
+        });
+        
+        // Wrap the form fields in a modal-body div
+        const modalBody = document.createElement('div');
+        modalBody.className = 'modal-body';
+        
+        // Move all form groups except the last button into modal body
+        const formGroups = Array.from(editModalContent.querySelectorAll('.form-group'));
+        const updateBtn = editModalContent.querySelector('#update-password-btn');
+        
+        formGroups.forEach(group => {
+            modalBody.appendChild(group);
+        });
+        
+        // Insert modal body before update button
+        editModalContent.insertBefore(modalBody, updateBtn);
+        
+        // Wrap the update button in modal-actions div
+        const modalActions = document.createElement('div');
+        modalActions.className = 'modal-actions';
+        
+        // Move update button into modal actions
+        editModalContent.insertBefore(modalActions, updateBtn);
+        modalActions.appendChild(updateBtn);
+    }
+}
+
+// Add this to the document ready section
+document.addEventListener('DOMContentLoaded', () => {
+    // ... existing code
+    
+    // Update modals for consistent styling
+    updateModalStyles();
+});
+
+// Add all character sets that might be included
+const charSets = {
+  lowercase: 'abcdefghijklmnopqrstuvwxyz',
+  uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  numbers: '0123456789',
+  symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+};
+
+// The rest of the password generator functions remain the same as before
+function openGeneratorModal() {
+  generatorModal.classList.remove('hidden');
+  regeneratePassword(); // Generate a password when opening the modal
+}
+
+function updateLengthValue() {
+  lengthValueSpan.textContent = passwordLengthInput.value;
+}
+
+function regeneratePassword() {
+  const length = parseInt(passwordLengthInput.value);
+  let charset = '';
+  
+  // Add selected character types to charset
+  if (includeLowercase.checked) charset += charSets.lowercase;
+  if (includeUppercase.checked) charset += charSets.uppercase;
+  if (includeNumbers.checked) charset += charSets.numbers;
+  if (includeSymbols.checked) charset += charSets.symbols;
+  
+  // Ensure at least one character set is selected
+  if (!charset) {
+    alert('Please select at least one character type');
+    includeLowercase.checked = true;
+    charset = charSets.lowercase;
+  }
+  
+  // Generate the password
+  let password = '';
+  const charsetLength = charset.length;
+  
+  // Ensure password contains at least one character from each selected set
+  let mandatoryChars = '';
+  if (includeLowercase.checked) {
+    mandatoryChars += charSets.lowercase.charAt(Math.floor(Math.random() * charSets.lowercase.length));
+  }
+  if (includeUppercase.checked) {
+    mandatoryChars += charSets.uppercase.charAt(Math.floor(Math.random() * charSets.uppercase.length));
+  }
+  if (includeNumbers.checked) {
+    mandatoryChars += charSets.numbers.charAt(Math.floor(Math.random() * charSets.numbers.length));
+  }
+  if (includeSymbols.checked) {
+    mandatoryChars += charSets.symbols.charAt(Math.floor(Math.random() * charSets.symbols.length));
+  }
+  
+  // Add mandatory characters
+  password = mandatoryChars;
+  
+  // Fill remaining characters randomly
+  for (let i = password.length; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charsetLength);
+    password += charset[randomIndex];
+  }
+  
+  // Shuffle the password to avoid predictable patterns
+  password = shuffleString(password);
+  
+  // Display the generated password
+  generatedPasswordInput.value = password;
+  
+  // Update password strength indicator
+  updatePasswordStrength(password);
+}
+
+function shuffleString(str) {
+  const array = str.split('');
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array.join('');
+}
+
+function updatePasswordStrength(password) {
+  const strength = getPasswordStrength(password);
+  let strengthClass = '';
+  let strengthText = '';
+  
+  if (strength < 40) {
+    strengthClass = 'weak';
+    strengthText = 'Weak';
+  } else if (strength < 80) {
+    strengthClass = 'medium';
+    strengthText = 'Medium';
+  } else {
+    strengthClass = 'strong';
+    strengthText = 'Strong';
+  }
+  
+  const strengthMeter = generatorModal.querySelector('.strength-meter');
+  const strengthTextEl = generatorModal.querySelector('.strength-text');
+  
+  // Remove all classes
+  strengthMeter.classList.remove('weak', 'medium', 'strong');
+  // Add appropriate class
+  strengthMeter.classList.add(strengthClass);
+  strengthTextEl.textContent = strengthText;
+}
+
+function useGeneratedPassword() {
+  passwordInput.value = generatedPasswordInput.value;
+  generatorModal.classList.add('hidden');
+  
+  // Also update the password strength indicator for the main form
+  const event = { target: passwordInput };
+  checkPasswordStrength(event);
+}
+
+function copyGeneratedPassword() {
+  navigator.clipboard.writeText(generatedPasswordInput.value)
+    .then(() => {
+      const originalText = copyGeneratedPasswordBtn.textContent;
+      copyGeneratedPasswordBtn.textContent = '✓';
+      setTimeout(() => {
+        copyGeneratedPasswordBtn.textContent = originalText;
+      }, 1500);
+    })
+    .catch(err => {
+      console.error('Could not copy text: ', err);
+    });
+}
+
+function getPasswordStrength(password) {
+  // Basic password strength algorithm
+  let strength = 0;
+  
+  // Length contribution
+  strength += password.length * 4;
+  
+  // Character variety contribution
+  if (/[a-z]/.test(password)) strength += 10;
+  if (/[A-Z]/.test(password)) strength += 10;
+  if (/[0-9]/.test(password)) strength += 10;
+  if (/[^a-zA-Z0-9]/.test(password)) strength += 15;
+  
+  // Reducing strength for repetitive patterns
+  if (/(.)\1{2,}/.test(password)) strength -= 10;
+  
+  return Math.min(100, strength);
+}
+
+// Add a copy button to password details
+function addCopyButtons() {
+  const passwordFields = document.querySelectorAll('#password-details .detail-row');
+  
+  passwordFields.forEach(field => {
+    const label = field.querySelector('strong').textContent;
+    const value = field.querySelector('p').textContent;
+    
+    // Add copy button for username and password fields
+    if (label.includes('Username') || label.includes('Password')) {
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-btn';
+      copyBtn.textContent = 'Copy';
+      copyBtn.dataset.copy = value;
+      
+      field.appendChild(copyBtn);
+    }
+  });
+}
+</script>
+</html>
